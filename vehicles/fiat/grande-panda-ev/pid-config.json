@@ -1,0 +1,139 @@
+{
+  "format": "abrp-native-editor-reference",
+  "format_version": 1,
+  "description": "Dokumentationsformat zum manuellen Abgleich mit dem nativen ABRP-PID-Editor; kein geprüfter Dateiimport.",
+  "vehicle": {
+    "manufacturer": "Fiat",
+    "model": "Grande Panda EV",
+    "model_year": null,
+    "ecu_software_version": null
+  },
+  "documented_on": "2026-11-07",
+  "last_edited_local": "2026-11-06T15:28:00+01:00",
+  "environment": {
+    "adapter": "OBDLink CX",
+    "connection": "Bluetooth LE",
+    "abrp_version": "7.1.13 (6060)",
+    "platform": "iOS"
+  },
+  "obd_protocol": 6,
+  "keep_alive_command": "",
+  "init_commands": [
+    "ATZ",
+    "ATD",
+    "ATE0",
+    "ATH1",
+    "ATAT1",
+    "ATL0",
+    "ATS0",
+    "ATM0",
+    "ATSP6",
+    "ATSH6B4",
+    "ATFCSH6B4",
+    "ATFCSD300000",
+    "ATFCSM1"
+  ],
+  "data_commands": [
+    {
+      "cmd": "ATSH6A2"
+    },
+    {
+      "cmd": "ATFCSH6A2"
+    },
+    {
+      "cmd": "ATCRA682"
+    },
+    {
+      "cmd": "22D523",
+      "key": "voltage",
+      "equation": "(A*256+B)/32",
+      "type": "number",
+      "min": 200,
+      "max": 450,
+      "unit": "V"
+    },
+    {
+      "cmd": "22D552",
+      "key": "current",
+      "equation": "(Signed(A)*256+B)/10",
+      "type": "number",
+      "min": -300,
+      "max": 300,
+      "unit": "A"
+    },
+    {
+      "cmd": "22D44C",
+      "key": "soc",
+      "equation": "(A*256+B)*100/8192",
+      "type": "number",
+      "unit": "percent"
+    },
+    {
+      "cmd": "ATAR"
+    },
+    {
+      "cmd": "ATSH6B4"
+    },
+    {
+      "cmd": "ATFCSH6B4"
+    },
+    {
+      "cmd": "ATCRA694"
+    },
+    {
+      "cmd": "22D4ED",
+      "key": "batt_temp",
+      "equation": "A-40",
+      "type": "number",
+      "unit": "degC"
+    },
+    {
+      "cmd": "22D409",
+      "key": "soh",
+      "equation": "A",
+      "type": "number",
+      "unit": "percent"
+    },
+    {
+      "cmd": "22D511",
+      "key": "soe",
+      "equation": "(A*256+B)*32",
+      "type": "number",
+      "unit": "Wh"
+    }
+  ],
+  "derived_values": [
+    {
+      "key": "power",
+      "equation_description": "current * voltage / 1000",
+      "unit": "kW",
+      "calculated_by": "ABRP; no separate PID configured"
+    },
+    {
+      "display_name": "Degradation",
+      "equation_description": "100 - soh",
+      "unit": "percent",
+      "calculated_by": "ABRP"
+    }
+  ],
+  "validation": {
+    "native_observations_on": "2026-11-06",
+    "current_power": {
+      "equation": "(Signed(A)*256+B)/10",
+      "editor_persistence_verified": true,
+      "vehicle_test_at_edit_time": "adapter_unavailable",
+      "driving_power_user_confirmed_on": "2026-11-07",
+      "numeric_driving_values_after_correction": null,
+      "regeneration_tested": false,
+      "charging_tested": false
+    },
+    "soe": {
+      "editor_unit": "Wh",
+      "display_unit": "kWh",
+      "raw_scale_wh_per_count": 32,
+      "car_scanner_recording_compared": true,
+      "native_live_display_verified": true
+    },
+    "unrecorded_bounds": "Absence of min/max on a command means not fully documented, not necessarily absent in the app."
+  }
+}
